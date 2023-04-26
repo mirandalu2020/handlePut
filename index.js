@@ -23,7 +23,7 @@ exports.handler = async(event) => {
     let personToUpdate = await peopleModel.scan('id').eq(id).exec();
     console.log(personToUpdate);
 
-    updatedPerson = {
+    let updatedPerson = {
       "id": id,
       "name": parsedBody.name || personToUpdate.name,
       "age": parsedBody.age || personToUpdate.age,
