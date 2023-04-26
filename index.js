@@ -1,10 +1,10 @@
 const dynamoose = require('dynamoose');
 
 const schema = new dynamoose.Schema({
-  "id": String,
-  "name": String,
-  "age": String,
-  "height": String
+  id: String,
+  name : String,
+  age: String,
+  height: String
 });
 
 const peopleModel = dynamoose.model('People', schema);
@@ -17,20 +17,14 @@ exports.handler = async(event) => {
 
   let parsedBody = JSON.parse(event.body);
 
+  let updateName = parsedBody.name;
+  let updateAge = parsedBody.age;
+  let updateHeight = parsedBody.height;
+
   const response = {statusCode: null, body: null};
 
   try {
-    let personToUpdate = await peopleModel.scan('id').eq(id).exec();
-    console.log(personToUpdate);
-
-    let updatedPerson = {
-      "id": id,
-      "name": parsedBody.name || personToUpdate.name,
-      "age": parsedBody.age || personToUpdate.age,
-      "height": parsedBody.height || personToUpdate.height
-    }
-
-    let results = await peopleModel.update({"id": id}, updatedPerson);
+    let results = await peopleModel.update({"id": id}, {"name": updateName, "age": updateAge, "height": updateHeight});
     console.log(results);
     response.body = JSON.stringify(results);
     response.statusCode = 200;
