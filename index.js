@@ -20,7 +20,7 @@ exports.handler = async(event) => {
   const response = {statusCode: null, body: null};
 
   try {
-    let personToUpdate = await PersonModel.scan('id').eq(params['id']).exec();
+    let personToUpdate = await peopleModel.scan('id').eq(id).exec();
     console.log(personToUpdate);
 
     updatedPerson = {
