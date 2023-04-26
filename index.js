@@ -30,7 +30,7 @@ exports.handler = async(event) => {
       "height": parsedBody.height || personToUpdate.height
     }
 
-    let results = await peopleModel.update({"id": id}, {"name": updatedName});
+    let results = await peopleModel.update({"id": id}, updatedPerson);
     console.log(results);
     response.body = JSON.stringify(results);
     response.statusCode = 200;
