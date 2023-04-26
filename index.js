@@ -17,14 +17,19 @@ exports.handler = async(event) => {
 
   let parsedBody = JSON.parse(event.body);
 
-  let updatedName = parsedBody.name;
-
   const response = {statusCode: null, body: null};
 
   try {
     let personToUpdate = await PersonModel.scan('id').eq(params['id']).exec();
     console.log(personToUpdate);
-    
+
+    updatedPerson = {
+      "id": id,
+      "name": parsedBody.name || personToUpdate.name,
+      "age": parsedBody.age || personToUpdate.age,
+      "height": parsedBody.height || personToUpdate.height
+    }
+
     let results = await peopleModel.update({"id": id}, {"name": updatedName});
     console.log(results);
     response.body = JSON.stringify(results);
